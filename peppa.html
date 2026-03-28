@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>🐷 小猪佩奇28天打卡</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+      background: #FFF5E6;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 32px 28px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 8px 32px rgba(213, 159, 96, 0.18);
+      text-align: center;
+    }
+
+    .pig-icon {
+      font-size: 48px;
+      margin-bottom: 8px;
+    }
+
+    .day-badge {
+      display: inline-block;
+      background: #FF8A65;
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    .episode {
+      font-size: 22px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 4px;
+    }
+
+    .episode-en {
+      font-size: 14px;
+      color: #999;
+      margin-bottom: 20px;
+    }
+
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: #FF8A65;
+      border-radius: 2px;
+      margin: 0 auto 20px;
+    }
+
+    .sentence-label {
+      font-size: 13px;
+      color: #FF8A65;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .sentence {
+      font-size: 18px;
+      color: #333;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .sentence small {
+      display: block;
+      font-size: 13px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .date-info {
+      font-size: 13px;
+      color: #bbb;
+      margin-bottom: 24px;
+    }
+
+    .progress-wrap {
+      background: #F5F5F5;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .progress-label {
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 8px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #EEE;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #FF8A65, #FFB74D);
+      border-radius: 4px;
+      transition: width 0.6s ease;
+    }
+
+    .progress-text {
+      font-size: 13px;
+      color: #666;
+      margin-top: 8px;
+    }
+
+    .footer {
+      font-size: 11px;
+      color: #CCC;
+      margin-top: 8px;
+    }
+
+    .prev-next {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      gap: 10px;
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+
+    .nav-btn:active { transform: scale(0.96); }
+
+    .nav-prev { background: #F0F0F0; color: #666; }
+    .nav-next { background: #FF8A65; color: white; }
+  </style>
+</head>
+<body>
+
+<div class="card" id="card">
+  <div class="pig-icon">🐷</div>
+  <div class="day-badge" id="dayBadge">第2天</div>
+  <div class="episode" id="episode">S01E02 Mr Dinosaur Is Lost</div>
+  <div class="episode-en" id="episodeCn">恐龙先生不见了</div>
+  <div class="divider"></div>
+  <div class="sentence-label">📝 今日句型</div>
+  <div class="sentence" id="sentence">
+    Where is Mr Dinosaur?
+    <small>恐龙先生在哪里？</small>
+  </div>
+  <div class="date-info" id="dateInfo">3月28日 · 周五</div>
+  <div class="progress-wrap">
+    <div class="progress-label">📅 本周进度</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+    </div>
+    <div class="progress-text" id="progressText">第1周 · 2/7</div>
+  </div>
+  <div class="prev-next">
+    <button class="nav-btn nav-prev" onclick="prev()">← 前一天</button>
+    <button class="nav-btn nav-next" onclick="next()">第二天 →</button>
+  </div>
+  <div class="footer">🐷 小猪佩奇28天打卡计划</div>
+</div>
+
+<script>
+const schedule = [
+  { day: 1,  date: "3月27日", week: "第1周", weekday: "周四", ep: "S01E01", title: "Muddy Puddles",       titleCn: "跳泥坑",          sentence: "Jump in the puddle!",              sentenceCn: "跳进水坑里！" },
+  { day: 2,  date: "3月28日", week: "第1周", weekday: "周五", ep: "S01E02", title: "Mr Dinosaur Is Lost", titleCn: "恐龙先生不见了",   sentence: "Where is Mr Dinosaur?",           sentenceCn: "恐龙先生在哪里？" },
+  { day: 3,  date: "3月29日", week: "第1周", weekday: "周六", ep: "S01E03", title: "Best Friend",         titleCn: "好朋友",           sentence: "This is my best friend.",         sentenceCn: "这是我的好朋友。" },
+  { day: 4,  date: "3月30日", week: "第1周", weekday: "周日", ep: "S01E04", title: "Polly Parrot",        titleCn: "鹦鹉波莉",         sentence: "This is Polly. / Polly says hello!", sentenceCn: "这是波莉。/ 波莉说你好！" },
+  { day: 5,  date: "3月31日", week: "第1周", weekday: "周一", ep: "S01E05", title: "Hide and Seek",        titleCn: "捉迷藏",           sentence: "Ready or not, here I come!",      sentenceCn: "准备好了吗我来找啦！" },
+  { day: 6,  date: "4月1日",  week: "第1周", weekday: "周二", ep: "S01E06", title: "The Playgroup",       titleCn: "幼儿园",           sentence: "Say hello to everyone!",          sentenceCn: "和大家说你好！" },
+  { day: 7,  date: "4月2日",  week: "第1周", weekday: "周三", ep: "复习日", title: "本周复习",            titleCn: "检测已学内容",     sentence: "Jump! / Where is...? / This is my best friend.", sentenceCn: "Jump! / Where is...? / This is my best friend." },
+  { day: 8,  date: "4月3日",  week: "第2周", weekday: "周四", ep: "S01E07", title: "Mummy Pig at Work",   titleCn: "猪妈妈工作",       sentence: "I'm sorry. / I didn't mean to...", sentenceCn: "对不起。/ 我不是故意的……" },
+  { day: 9,  date: "4月4日",  week: "第2周", weekday: "周五", ep: "S01E08", title: "Piggy in the Middle", titleCn: "传球游戏",         sentence: "Catch the ball! / I can't catch it!", sentenceCn: "接住球！/ 我接不住！" },
+  { day: 10, date: "4月5日",  week: "第2周", weekday: "周六", ep: "S01E09", title: "Daddy Pig Loses His Glasses", titleCn: "找不到眼镜", sentence: "I can't find my glasses.",        sentenceCn: "我找不到我的眼镜了。" },
+  { day: 11, date: "4月6日",  week: "第2周", weekday: "周日", ep: "S01E10", title: "Gardening",           titleCn: "园艺",             sentence: "What a beautiful garden!",         sentenceCn: "多漂亮的花园啊！" },
+  { day: 12, date: "4月7日",  week: "第2周", weekday: "周一", ep: "S01E11", title: "Hiccups",             titleCn: "打嗝",             sentence: "Do you have the hiccups? / Drink some water.", sentenceCn: "你打嗝了吗？/ 喝点水吧。" },
+  { day: 13, date: "4月8日",  week: "第2周", weekday: "周二", ep: "S01E12", title: "Bicycles",            titleCn: "骑自行车",         sentence: "It's fun! / Let's ride our bicycles!", sentenceCn: "好好玩！/ 我们骑自行车吧！" },
+  { day: 14, date: "4月9日",  week: "第2周", weekday: "周三", ep: "复习日", title: "本周复习",            titleCn: "检测已学内容",     sentence: "I'm sorry. / Catch the ball! / What a beautiful...!", sentenceCn: "I'm sorry. / Catch! / What a beautiful...!" },
+  { day: 15, date: "4月10日", week: "第3周", weekday: "周四", ep: "S01E13", title: "Secrets",             titleCn: "秘密",             sentence: "It's a secret! / Don't tell anyone!", sentenceCn: "这是个秘密！/ 别告诉任何人！" },
+  { day: 16, date: "4月11日", week: "第3周", weekday: "周五", ep: "S01E14", title: "Flying a Kite",       titleCn: "放风筝",           sentence: "The kite is stuck in the tree!",   sentenceCn: "风筝卡在树上了！" },
+  { day: 17, date: "4月12日", week: "第3周", weekday: "周六", ep: "S01E15", title: "Picnic",              titleCn: "野餐",             sentence: "Let's have a picnic! / It's yummy!", sentenceCn: "我们去野餐吧！/ 好好吃！" },
+  { day: 18, date: "4月13日", week: "第3周", weekday: "周日", ep: "S01E16", title: "Musical Instruments", titleCn: "乐器",             sentence: "Let's make music! / I can play the drum!", sentenceCn: "我们来做音乐！/ 我会打鼓！" },
+  { day: 19, date: "4月14日", week: "第3周", weekday: "周一", ep: "S01E17", title: "Dressing Up",         titleCn: "换装游戏",         sentence: "Let's dress up! / You look like a...", sentenceCn: "我们来换装吧！/ 你看起来像……" },
+  { day: 20, date: "4月15日", week: "第3周", weekday: "周二", ep: "S01E18", title: "New Shoes",           titleCn: "新鞋子",           sentence: "I have new shoes! / They're really nice!", sentenceCn: "我有新鞋子了！/ 它们真漂亮！" },
+  { day: 21, date: "4月16日", week: "第3周", weekday: "周三", ep: "复习日", title: "本周复习",            titleCn: "检测已学内容",     sentence: "It's a secret! / It's yummy! / Let's dress up!", sentenceCn: "It's a secret! / It's yummy! / Let's dress up!" },
+  { day: 22, date: "4月17日", week: "第4周", weekday: "周四", ep: "S01E19", title: "The Rainbow",        titleCn: "彩虹",             sentence: "Look at the rainbow! / It's so colorful!", sentenceCn: "看彩虹！/ 颜色好丰富啊！" },
+  { day: 23, date: "4月18日", week: "第4周", weekday: "周五", ep: "S01E20", title: "Tidying Up",          titleCn: "整理房间",         sentence: "Let's tidy up! / Put it away!",    sentenceCn: "我们来收拾吧！/ 把它收好！" },
+  { day: 24, date: "4月19日", week: "第4周", weekday: "周六", ep: "S01E21", title: "Splashing in the Pool", titleCn: "游泳池",        sentence: "Splash splash! / I can swim!",    sentenceCn: "哗啦哗啦！/ 我会游泳！" },
+  { day: 25, date: "4月20日", week: "第4周", weekday: "周日", ep: "S01E22", title: "Blow a Bubble",       titleCn: "吹泡泡",           sentence: "I can blow bubbles! / Wow! Big bubble!", sentenceCn: "我会吹泡泡！/ 哇！大泡泡！" },
+  { day: 26, date: "4月21日", week: "第4周", weekday: "周一", ep: "S01E23", title: "Cartoon",             titleCn: "看动画片",         sentence: "Let's watch TV! / It's my favourite programme.", sentenceCn: "我们看电视吧！/ 这是我最喜欢的节目。" },
+  { day: 27, date: "4月22日", week: "第4周", weekday: "周二", ep: "自选",   title: "复习自选",            titleCn: "挑最喜欢的1-2集",  sentence: "复习前26天最熟练的5个句子！",      sentenceCn: "" },
+  { day: 28, date: "4月23日", week: "第4周", weekday: "周三", ep: "🎉完成", title: "打卡完成！",          titleCn: "28天圆满结束",     sentence: "能听懂简单指令 + 会说简单句子 + 愿意开口！🎉", sentenceCn: "" },
+];
+
+// 计算今天自动对应到第几天
+function getTodayIndex() {
+  const start = new Date('2026-03-27');
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const diff = Math.floor((today - start) / (1000 * 60 * 60 * 24));
+  return Math.max(0, Math.min(diff, 27));
+}
+
+let current = getTodayIndex();
+
+function render(i) {
+  const d = schedule[i];
+  document.getElementById('dayBadge').textContent = `第${d.day}天`;
+  document.getElementById('episode').textContent = `${d.ep} ${d.title}`;
+  document.getElementById('episodeCn').textContent = d.titleCn;
+  document.getElementById('sentence').innerHTML = d.sentence + (d.sentenceCn ? `<small>${d.sentenceCn}</small>` : '');
+  document.getElementById('dateInfo').textContent = `${d.date} · ${d.weekday}`;
+
+  const weekNum = Math.ceil(d.day / 7);
+  const dayInWeek = ((d.day - 1) % 7) + 1;
+  document.getElementById('progressText').textContent = `${d.week} · ${dayInWeek}/7`;
+  const pct = Math.round((d.day / 28) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function prev() { current = Math.max(0, current - 1); render(current); }
+function next() { current = Math.min(27, current + 1); render(current); }
+
+render(current);
+</script>
+
+</body>
+</html>
