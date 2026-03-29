@@ -263,6 +263,7 @@ function render(i) {
 
       <div class="prev-next">
         <button class="nav-btn nav-prev" onclick="prev()">← 前一天</button>
+        <button class="nav-btn nav-prev" onclick="goToToday()" style="background:#FFB74D;color:#fff;">回到今天</button>
         <button class="nav-btn nav-next" onclick="next()">第二天 →</button>
       </div>
     </div>
@@ -273,6 +274,7 @@ function render(i) {
 
 function prev() { current = Math.max(0, current - 1); render(current); }
 function next() { current = Math.min(27, current + 1); render(current); }
+function goToToday() { current = getTodayIndex(); render(current); }
 
 render(current);
 </script>
